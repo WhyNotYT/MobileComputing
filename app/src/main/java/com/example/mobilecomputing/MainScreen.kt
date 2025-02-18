@@ -1,6 +1,4 @@
-
 package com.example.mobilecomputing.screens
-
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -32,11 +30,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.layout.ContentScale
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilecomputing.viewmodel.UserProfileViewModel
-
-
+import com.example.mobilecomputing.SensorBackgroundService
 
 @Composable
-fun MainScreen(onNavigateToSecond: () -> Unit, viewModel: UserProfileViewModel = viewModel()) {
+fun MainScreen(
+    onNavigateToSecond: () -> Unit,
+    onNavigateToSensor: () -> Unit,
+    viewModel: UserProfileViewModel = viewModel()
+) {
     var username by remember { mutableStateOf("") }
 
     val savedUsername by viewModel.username.collectAsState()
@@ -96,15 +97,26 @@ fun MainScreen(onNavigateToSecond: () -> Unit, viewModel: UserProfileViewModel =
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
-                onClick = {
-                    if (username.isNotBlank()) {
-                        viewModel.saveProfile(username)
-                        onNavigateToSecond()
-                    }
-                }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Text("Save Profile")
+                Button(
+                    onClick = {
+                        if (username.isNotBlank()) {
+                            viewModel.saveProfile(username)
+                            onNavigateToSecond()
+                        }
+                    }
+                ) {
+                    Text("Save Profile")
+                }
+
+                Button(
+                    onClick = onNavigateToSensor
+                ) {
+                    Text("Sensor Data")
+                }
             }
         }
 
@@ -116,9 +128,6 @@ fun MainScreen(onNavigateToSecond: () -> Unit, viewModel: UserProfileViewModel =
         )
     }
 }
-
-
-
 
 @Composable
 fun ConversationWithUserProfile(

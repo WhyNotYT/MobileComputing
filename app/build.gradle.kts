@@ -53,6 +53,10 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("androidx.navigation:navigation-compose:2.7.6")
 
+    // Add these dependencies for Compose Lifecycle and LiveData integration
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.0")
+
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
